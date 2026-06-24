@@ -149,7 +149,6 @@ const Agenda: Page = () => (
       { num: '01', label: '新功能與優化' },
       { num: '02', label: '全新通知機制' },
       { num: '03', label: 'Demo' },
-      { num: '04', label: '即將發布' },
     ].map(({ num, label }) => (
       <div
         key={num}
