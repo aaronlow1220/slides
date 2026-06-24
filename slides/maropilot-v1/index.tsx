@@ -2,14 +2,24 @@ import type { DesignSystem, Page, SlideMeta } from '@open-slide/core';
 import { useSlidePageNumber } from '@open-slide/core';
 import briefListImg from './assets/d8aa711f-c617-47f4-bdbd-258044f48485.png';
 import briefDetailImg from './assets/b3313b9d-b29a-42e6-aa96-c1e1d350a36b.png';
+import notifImg1 from './assets/b73930e9-9092-4b5f-9e72-ddb9c430cb7e.png';
+import notifImg2 from './assets/48f43045-6cd2-4d4d-aca6-41e886e7c86c.png';
+import notifAfterImg from './assets/45570361-3ec4-4faa-989a-558334cba254.png';
 
 export const design: DesignSystem = {
-  palette: { bg: '#FFFFFF', text: '#0F172A', accent: '#3B82F6' },
+  palette: {
+    bg: '#FFFFFF',
+    text: '#0F172A',
+    accent: '#3874ff',
+  },
   fonts: {
     display: '-apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif',
     body: '-apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif',
   },
-  typeScale: { hero: 180, body: 38 },
+  typeScale: {
+    hero: 180,
+    body: 38,
+  },
   radius: 12,
 };
 
@@ -171,16 +181,7 @@ const Agenda: Page = () => (
 // ── 03 · Section — 新功能與優化 ──────────────────────────────────────────────
 const SectionFeatures: Page = () => (
   <div
-    style={{
-      ...fill,
-      background: 'var(--osd-accent)',
-      color: '#FFFFFF',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      padding: '0 160px',
-      position: 'relative',
-    }}
+    style={{ ...fill, background: 'var(--osd-accent)', color: '#FFFFFF', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 160px', position: 'relative', backgroundColor: '#0F172A' }}
   >
     <div
       style={{
@@ -387,66 +388,86 @@ const NotificationRedesign: Page = () => (
       ...fill,
       background: 'var(--osd-bg)',
       color: 'var(--osd-text)',
-      padding: 120,
+      padding: '80px 120px',
       position: 'relative',
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      flexDirection: 'row',
+      gap: 80,
+      alignItems: 'center',
     }}
   >
-    {/* @slide-comment id="c-cab83cc7" ts="2026-06-24T03:26:16.227Z" text="eyJub3RlIjoiYWRkIGI3MzkzMGU5IGFuZCA0OGY0MzA0NSBpbWFnZSBhbmQgbWFrZSBpdCBpbmxpbmUgdGhlIGFzcGVjdCByYXRpb24gc2hvdWxkIGJlIHRoZSBzYW1lIGFzIGltYWdlIGluIHBhZ2UgNSJ9" */}
-    <div
-      style={{
-        fontSize: 22,
-        fontWeight: 700,
-        color: 'var(--osd-accent)',
-        letterSpacing: '0.12em',
-        textTransform: 'uppercase',
-        marginBottom: 24,
-      }}
-    >
-      通知
-    </div>
-    <h2
-      style={{
-        fontFamily: 'var(--osd-font-display)',
-        fontSize: 72,
-        fontWeight: 800,
-        margin: '0 0 64px',
-        lineHeight: 1.2,
-      }}
-    >
-      重新設計的通知體驗
-    </h2>
-    {[
-      { title: '48 小時時間窗', desc: '通知列表僅顯示最近 48 小時的記錄' },
-      { title: '展開查看詳情', desc: '點擊通知可查看當時 Brief 狀態，並直接前往進稿表' },
-    ].map(({ title, desc }) => (
+    {/* Left — text */}
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', width: 640, flexShrink: 0 }}>
       <div
-        key={title}
         style={{
-          display: 'flex',
-          gap: 32,
-          alignItems: 'flex-start',
-          marginBottom: 44,
+          fontSize: 22,
+          fontWeight: 700,
+          color: 'var(--osd-accent)',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          marginBottom: 24,
         }}
       >
-        <div
-          style={{
-            width: 10,
-            height: 10,
-            borderRadius: '50%',
-            background: 'var(--osd-accent)',
-            marginTop: 18,
-            flexShrink: 0,
-          }}
-        />
-        <div>
-          <div style={{ fontSize: 38, fontWeight: 700, lineHeight: 1.3 }}>{title}</div>
-          <div style={{ fontSize: 30, color: muted, lineHeight: 1.5, marginTop: 8 }}>{desc}</div>
-        </div>
+        通知
       </div>
-    ))}
+      <h2
+        style={{
+          fontFamily: 'var(--osd-font-display)',
+          fontSize: 60,
+          fontWeight: 800,
+          margin: '0 0 52px',
+          lineHeight: 1.2,
+        }}
+      >
+        重新設計的通知體驗
+      </h2>
+      {[
+        { title: '48 小時時間窗', desc: '通知列表僅顯示最近 48 小時的記錄' },
+        { title: '展開查看詳情', desc: '點擊通知可查看當時 Brief 狀態，並直接前往進稿表' },
+      ].map(({ title, desc }) => (
+        <div
+          key={title}
+          style={{
+            display: 'flex',
+            gap: 28,
+            alignItems: 'flex-start',
+            marginBottom: 36,
+          }}
+        >
+          <div
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: '50%',
+              background: 'var(--osd-accent)',
+              marginTop: 16,
+              flexShrink: 0,
+            }}
+          />
+          <div>
+            <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1.3 }}>{title}</div>
+            <div style={{ fontSize: 26, color: muted, lineHeight: 1.5, marginTop: 6 }}>{desc}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+    {/* Right — screenshots */}
+    <div style={{ display: 'flex', flexDirection: 'row', gap: 20, alignSelf: 'center', height: 860, justifyContent: 'center' }}>
+      <div style={{ height: '100%', width: 'auto', flexShrink: 0, overflow: 'hidden', borderRadius: 12, border: `1px solid ${border}` }}>
+        <img
+          src={notifImg1}
+          alt="通知截圖 1"
+          style={{ height: '133%', width: 'auto', display: 'block', objectPosition: 'top' }}
+        />
+      </div>
+      <div style={{ height: '100%', width: 'auto', flexShrink: 0, overflow: 'hidden', borderRadius: 12, border: `1px solid ${border}` }}>
+        <img
+          src={notifImg2}
+          alt="通知截圖 2"
+          style={{ height: '133%', width: 'auto', display: 'block', objectPosition: 'top' }}
+        />
+      </div>
+    </div>
     <PageNum />
   </div>
 );
@@ -617,6 +638,9 @@ const NotificationMechanism: Page = () => (
             <span style={{ fontSize: 28, lineHeight: 1.5, color: '#064E3B' }}>{t}</span>
           </div>
         ))}
+        <div style={{ marginTop: 28, borderRadius: 8, overflow: 'hidden', border: `1px solid #A7F3D0` }}>
+          <img src={notifAfterImg} alt="新機制截圖" style={{ width: '100%', display: 'block' }} />
+        </div>
       </div>
     </div>
     <PageNum />
@@ -647,7 +671,7 @@ const ComingSoon: Page = () => (
         marginBottom: 24,
       }}
     >
-      04 · 即將發布
+      即將發布
     </div>
     <h2
       style={{
@@ -657,14 +681,12 @@ const ComingSoon: Page = () => (
         margin: '0 0 72px',
         lineHeight: 1.2,
       }}
-    >
-      接下來的計畫
-    </h2>
+    >即將發佈的更新</h2>
     <div style={{ display: 'flex', gap: 40 }}>
       {[
-        { title: '桌機版本', desc: 'MaroPilot Desktop App' },
-        { title: '多格式 Spreadsheet', desc: '支援 3 種試算表格式' },
-      ].map(({ title, desc }) => (
+        { title: '桌機版本', desc: 'MaroPilot Desktop App', points: [] },
+        { title: '多格式 Spreadsheet', desc: '支援 3 種試算表格式', points: ['基於行', '基於行且多區塊', '基於列'] },
+      ].map(({ title, desc, points }) => (
         <div
           key={title}
           style={{
@@ -681,10 +703,62 @@ const ComingSoon: Page = () => (
             {title}
           </div>
           <div style={{ fontSize: 30, color: muted, lineHeight: 1.5 }}>{desc}</div>
+          {points.length > 0 && (
+            <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 16 }}>
+              {points.map((p) => (
+                <div key={p} style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--osd-accent)', flexShrink: 0 }} />
+                  <span style={{ fontSize: 28, color: muted, lineHeight: 1.4 }}>{p}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ))}
     </div>
     <PageNum />
+  </div>
+);
+
+// ── 10 · Demo ───────────────────────────────────────────────────────────────
+const Demo: Page = () => (
+  <div
+    style={{
+      ...fill,
+      background: '#0F172A',
+      color: '#FFFFFF',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      padding: '0 160px',
+      position: 'relative',
+    }}
+  >
+    <div
+      style={{
+        fontSize: 22,
+        fontWeight: 700,
+        color: 'rgba(255,255,255,0.4)',
+        letterSpacing: '0.18em',
+        textTransform: 'uppercase',
+        marginBottom: 36,
+      }}
+    >
+      03
+    </div>
+    <h2
+      style={{
+        fontFamily: 'var(--osd-font-display)',
+        fontSize: 120,
+        fontWeight: 900,
+        margin: 0,
+        lineHeight: 1.1,
+        letterSpacing: '-0.02em',
+      }}
+    >
+      Demo
+    </h2>
+    <PageNum light />
   </div>
 );
 
@@ -700,7 +774,8 @@ export default [
   BriefList,
   BriefDetail,
   NotificationRedesign,
+  ComingSoon,
   SectionNotification,
   NotificationMechanism,
-  ComingSoon,
+  Demo,
 ] satisfies Page[];
