@@ -515,130 +515,161 @@ const SectionNotification: Page = () => (
   </div>
 );
 
-// ── 08 · Before vs After ─────────────────────────────────────────────────────
+// ── 08 · 目前機制 ───────────────────────────────────────────────────────────
+const NotificationCurrentMechanism: Page = () => (
+  <div
+    style={{
+      ...fill,
+      background: 'var(--osd-bg)',
+      color: 'var(--osd-text)',
+      padding: '0 160px',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+    }}
+  >
+    <div
+      style={{
+        fontSize: 22,
+        fontWeight: 700,
+        color: 'var(--osd-accent)',
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        marginBottom: 32,
+      }}
+    >
+      通知機制
+    </div>
+    <h2
+      style={{
+        fontFamily: 'var(--osd-font-display)',
+        fontSize: 80,
+        fontWeight: 900,
+        margin: '0 0 64px',
+        lineHeight: 1.15,
+        letterSpacing: '-0.02em',
+      }}
+    >
+      目前機制
+    </h2>
+    {[
+      '目前通知機制採用 一個 Spreadsheet 對應一則通知訊息 的方式。',
+      '當使用者訂閱的 Spreadsheet 數量增加時，通知數量也會同步增加，容易在同一時間產生大量通知，影響使用體驗。',
+    ].map((t) => (
+      <div key={t} style={{ display: 'flex', gap: 28, alignItems: 'flex-start', marginBottom: 44 }}>
+        <div
+          style={{
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            background: red,
+            marginTop: 18,
+            flexShrink: 0,
+          }}
+        />
+        <span style={{ fontSize: 38, lineHeight: 1.6, color: 'var(--osd-text)' }}>{t}</span>
+      </div>
+    ))}
+    <PageNum />
+  </div>
+);
+
+// ── 09 · 彙總式通知機制 ──────────────────────────────────────────────────────
 const NotificationMechanism: Page = () => (
   <div
     style={{
       ...fill,
       background: 'var(--osd-bg)',
       color: 'var(--osd-text)',
-      padding: '80px 120px 80px',
+      padding: '80px 120px',
       position: 'relative',
       display: 'flex',
       flexDirection: 'column',
     }}
   >
+    <div
+      style={{
+        fontSize: 22,
+        fontWeight: 700,
+        color: 'var(--osd-accent)',
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        marginBottom: 16,
+      }}
+    >
+      新機制
+    </div>
     <h2
       style={{
         fontFamily: 'var(--osd-font-display)',
         fontSize: 56,
         fontWeight: 800,
-        margin: '0 0 48px',
+        margin: '0 0 40px',
         lineHeight: 1.2,
       }}
     >
-      通知機制調整
+      彙總式通知機制
     </h2>
-    <div style={{ display: 'flex', gap: 40, flex: 1 }}>
-      {/* Before */}
-      <div
-        style={{
-          flex: 1,
-          background: '#FEF2F2',
-          borderRadius: 16,
-          padding: '44px 48px',
-          border: `1.5px solid #FECACA`,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <div
-          style={{
-            fontSize: 18,
-            fontWeight: 700,
-            color: red,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            marginBottom: 24,
-          }}
-        >
-          現有機制
-        </div>
-        <div
-          style={{
-            fontSize: 34,
-            fontWeight: 800,
-            marginBottom: 32,
-            lineHeight: 1.3,
-            color: '#7F1D1D',
-          }}
-        >
-          1 Spreadsheet = 1 通知
-        </div>
+    <div style={{ display: 'flex', gap: 60, flex: 1, minHeight: 0 }}>
+      {/* Left — description */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0 }}>
         {[
-          '訂閱數量增加時，通知量同步暴增',
-          '同一時間收到大量重複通知',
-          '影響使用者體驗',
+          '為降低通知數量並提升通知效率，後續將調整為彙總式通知機制。',
+          '將所有已訂閱 Spreadsheet 的異常通知整合為單一通知訊息，避免同時間收到大量重複通知。',
+          '整合後通知的嚴重等級（Severity），將以當次所有異常 Spreadsheet 中的最高嚴重等級作為通知等級。',
         ].map((t) => (
-          <div
-            key={t}
-            style={{ display: 'flex', gap: 16, marginBottom: 18, alignItems: 'flex-start' }}
-          >
-            <span style={{ color: red, fontSize: 26, lineHeight: 1.5, flexShrink: 0 }}>—</span>
-            <span style={{ fontSize: 28, lineHeight: 1.5, color: '#7F1D1D' }}>{t}</span>
+          <div key={t} style={{ display: 'flex', gap: 20, marginBottom: 28, alignItems: 'flex-start' }}>
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--osd-accent)', marginTop: 14, flexShrink: 0 }} />
+            <span style={{ fontSize: 28, lineHeight: 1.6, color: 'var(--osd-text)' }}>{t}</span>
           </div>
         ))}
+        <div style={{ marginTop: 8, marginLeft: 28, display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {[
+            { icon: '🚨', title: '緊急！', desc: '重大錯誤請立即處理' },
+            { icon: '⚠️', title: '警告', desc: '請確認設定是否正確' },
+            { icon: '✅', title: '通知', desc: '太好了 目前監控正常' },
+          ].map(({ icon, title, desc }) => (
+            <div key={title} style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+              <span style={{ fontSize: 22, flexShrink: 0 }}>{icon}</span>
+              <span style={{ fontSize: 24, fontWeight: 700, color: 'var(--osd-text)' }}>{title}</span>
+              <span style={{ fontSize: 22, color: muted }}>— {desc}</span>
+            </div>
+          ))}
+        </div>
       </div>
-      {/* After */}
-      <div
-        style={{
-          flex: 1,
-          background: '#F0FDF4',
-          borderRadius: 16,
-          padding: '44px 48px',
-          border: `1.5px solid #A7F3D0`,
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <div
-          style={{
-            fontSize: 18,
-            fontWeight: 700,
-            color: green,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            marginBottom: 24,
-          }}
-        >
-          新機制
-        </div>
-        <div
-          style={{
-            fontSize: 34,
-            fontWeight: 800,
-            marginBottom: 32,
-            lineHeight: 1.3,
-            color: '#064E3B',
-          }}
-        >
-          彙總式通知
-        </div>
-        {[
-          '所有異常整合為單一通知',
-          '嚴重等級取所有異常中的最高值',
-          '通知包含摘要與詳情頁連結',
-        ].map((t) => (
-          <div
-            key={t}
-            style={{ display: 'flex', gap: 16, marginBottom: 18, alignItems: 'flex-start' }}
-          >
-            <span style={{ color: green, fontSize: 26, lineHeight: 1.5, flexShrink: 0 }}>✓</span>
-            <span style={{ fontSize: 28, lineHeight: 1.5, color: '#064E3B' }}>{t}</span>
+      {/* Right — 通知訊息將包含 + flow */}
+      <div style={{ width: 720, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 32 }}>
+        <div>
+          <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--osd-accent)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 20 }}>
+            通知訊息將包含
           </div>
-        ))}
-        <div style={{ marginTop: 28, borderRadius: 8, overflow: 'hidden', border: `1px solid #A7F3D0` }}>
-          <img src={notifAfterImg} alt="新機制截圖" style={{ width: '100%', display: 'block' }} />
+          {['本次異常通知的摘要資訊。', '通知詳情頁連結。'].map((t) => (
+            <div key={t} style={{ display: 'flex', gap: 16, marginBottom: 14, alignItems: 'flex-start' }}>
+              <div style={{ width: 6, height: 6, borderRadius: '50%', background: muted, marginTop: 13, flexShrink: 0 }} />
+              <span style={{ fontSize: 26, color: muted, lineHeight: 1.5 }}>{t}</span>
+            </div>
+          ))}
+          <div style={{ marginTop: 24, borderRadius: 12, overflow: 'hidden', border: `1px solid ${border}` }}>
+            <img src={notifAfterImg} alt="通知截圖" style={{ width: '100%', display: 'block' }} />
+          </div>
+        </div>
+        <div>
+          <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--osd-accent)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 20 }}>
+            通知查看流程
+          </div>
+          {[
+            '使用者點擊通知中的連結。',
+            '進入通知詳情頁，查看所有異常項目。',
+            '點擊特定錯誤項目。',
+            '系統導向對應的 Spreadsheet。',
+            '使用者可直接定位並處理問題。',
+          ].map((t, i) => (
+            <div key={t} style={{ display: 'flex', gap: 16, marginBottom: 16, alignItems: 'flex-start' }}>
+              <span style={{ fontSize: 18, fontWeight: 700, color: 'var(--osd-accent)', minWidth: 24, marginTop: 4, flexShrink: 0 }}>{i + 1}.</span>
+              <span style={{ fontSize: 24, lineHeight: 1.5, color: 'var(--osd-text)' }}>{t}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -775,6 +806,7 @@ export default [
   NotificationRedesign,
   ComingSoon,
   SectionNotification,
+  NotificationCurrentMechanism,
   NotificationMechanism,
   Demo,
 ] satisfies Page[];
